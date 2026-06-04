@@ -5,11 +5,13 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <Chatbot />
       <Routes>
         <Route path="/"       element={<Home />} />
         <Route path="/menu"   element={<Menu />} />
