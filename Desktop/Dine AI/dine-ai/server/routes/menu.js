@@ -20,4 +20,13 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    await MenuItem.findByIdAndDelete(req.params.id);
+    res.json({ message: '✅ Item deleted!' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;

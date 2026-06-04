@@ -4,6 +4,7 @@ import Menu from './pages/Menu';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Admin from './pages/Admin';
 import Navbar from './components/Navbar';
 import Chatbot from './components/Chatbot';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/cart"   element={<Cart />} />
         <Route path="/login"  element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin"  element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
