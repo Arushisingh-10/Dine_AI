@@ -1,18 +1,20 @@
 import { Link, useLocation } from 'react-router-dom';
 import logo from './dine-ai-logo.svg';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Navbar() {
   const location = useLocation();
+  const { darkMode, toggleDark } = useTheme();
 
   const isActive = (path) => location.pathname === path;
 
   const navLinks = [
-    { path: '/menu', label: 'Menu', emoji: '🍽️' },
-    { path: '/cart', label: 'Cart', emoji: '🛒' },
+    { path: '/menu',    label: 'Menu',    emoji: '🍽️' },
+    { path: '/cart',    label: 'Cart',    emoji: '🛒' },
     { path: '/scanner', label: 'Scanner', emoji: '📸' },
-    { path: '/login', label: 'Login', emoji: '👤' },
-    { path: '/admin', label: 'Admin', emoji: '⚙️' },
     { path: '/reviews', label: 'Reviews', emoji: '⭐' },
+    { path: '/login',   label: 'Login',   emoji: '👤' },
+    { path: '/admin',   label: 'Admin',   emoji: '⚙️' },
   ];
 
   return (
@@ -20,7 +22,7 @@ export default function Navbar() {
       position: 'sticky',
       top: 0,
       zIndex: 1000,
-      background: 'rgba(26, 26, 46, 0.85)',
+      background: darkMode ? 'rgba(15, 15, 26, 0.95)' : 'rgba(26, 26, 46, 0.85)',
       backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)',
       borderBottom: '1px solid rgba(255,255,255,0.1)',
@@ -74,6 +76,27 @@ export default function Navbar() {
           {link.label}
         </Link>
       ))}
+
+      {/* Dark Mode Toggle */}
+      <button onClick={toggleDark}
+        style={{
+          marginLeft: '8px',
+          background: darkMode ? '#FFD700' : 'rgba(255,255,255,0.1)',
+          border: 'none',
+          borderRadius: '30px',
+          padding: '8px 16px',
+          cursor: 'pointer',
+          fontSize: '18px',
+          transition: 'all 0.3s ease',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          color: darkMode ? '#1A1A2E' : 'white',
+          fontWeight: '700',
+          fontSize: '13px',
+        }}>
+        {darkMode ? '☀️ Light' : '🌙 Dark'}
+      </button>
     </nav>
   );
 }

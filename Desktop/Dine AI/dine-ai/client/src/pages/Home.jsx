@@ -1,22 +1,20 @@
 import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Home() {
+  const { darkMode } = useTheme();
+
   return (
-    <div className="min-h-screen bg-white">
+    <div style={{ background: darkMode ? '#0F0F1A' : '#ffffff' }}>
 
       {/* Hero Section */}
       <div className="relative overflow-hidden text-white py-24 px-8 text-center"
         style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #8B0000 50%, #FF6B35 100%)' }}>
-        
-        {/* Background decorative circles */}
         <div className="absolute top-0 left-0 w-64 h-64 rounded-full opacity-10"
           style={{ background: '#FF6B35', transform: 'translate(-30%, -30%)' }}/>
         <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10"
           style={{ background: '#FFD700', transform: 'translate(30%, 30%)' }}/>
-        <div className="absolute top-1/2 left-10 w-32 h-32 rounded-full opacity-5"
-          style={{ background: '#fff' }}/>
 
-        {/* Badge */}
         <div className="inline-block bg-white bg-opacity-10 border border-white border-opacity-20 px-4 py-1 rounded-full text-sm font-semibold mb-6 backdrop-blur">
           🤖 AI Powered Restaurant Experience
         </div>
@@ -28,7 +26,6 @@ export default function Home() {
           Experience the future of dining — AI-powered recommendations,<br/> smart ordering & more!
         </p>
 
-        {/* Stats */}
         <div className="flex justify-center gap-10 mb-10 mt-6">
           <div>
             <p className="text-3xl font-black" style={{ color: '#FFD700' }}>50+</p>
@@ -58,34 +55,37 @@ export default function Home() {
       </div>
 
       {/* Features Section */}
-      <div className="py-16 px-8">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Why Dine AI? ✨</h2>
+      <div className="py-16 px-8" style={{ background: darkMode ? '#0F0F1A' : '#ffffff' }}>
+        <h2 className="text-4xl font-bold text-center mb-4"
+          style={{ color: darkMode ? '#ffffff' : '#1A1A2E' }}>
+          Why Dine AI? ✨
+        </h2>
+        <p className="text-center mb-12" style={{ color: darkMode ? '#aaaaaa' : '#9ca3af' }}>
+          Powered by cutting-edge AI technology
+        </p>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-
-          <div className="bg-orange-50 rounded-2xl p-8 text-center shadow hover:shadow-lg transition">
-            <div className="text-5xl mb-4">🤖</div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">AI Chatbot</h3>
-            <p className="text-gray-600">Ask our AI anything — get personalized food recommendations instantly!</p>
-          </div>
-
-          <div className="bg-red-50 rounded-2xl p-8 text-center shadow hover:shadow-lg transition">
-            <div className="text-5xl mb-4">📸</div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Food Scanner</h3>
-            <p className="text-gray-600">Upload a food photo and our AI will identify the dish for you!</p>
-          </div>
-
-          <div className="bg-yellow-50 rounded-2xl p-8 text-center shadow hover:shadow-lg transition">
-            <div className="text-5xl mb-4">⭐</div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Smart Recommendations</h3>
-            <p className="text-gray-600">Get personalized menu suggestions based on your taste preferences!</p>
-          </div>
-
+          {[
+            { emoji: '🤖', title: 'AI Chatbot', desc: 'Ask our AI anything — get personalized food recommendations instantly!' },
+            { emoji: '📸', title: 'Food Scanner', desc: 'Upload a food photo and our AI will identify the dish for you!' },
+            { emoji: '⭐', title: 'Smart Recommendations', desc: 'Get personalized menu suggestions based on your taste preferences!' },
+          ].map((card, i) => (
+            <div key={i} className="rounded-2xl p-8 text-center shadow hover:shadow-lg transition"
+              style={{ background: darkMode ? '#1A1A2E' : '#f9fafb', border: darkMode ? '1px solid #333' : 'none' }}>
+              <div className="text-5xl mb-4">{card.emoji}</div>
+              <h3 className="text-xl font-bold mb-2" style={{ color: darkMode ? '#ffffff' : '#1A1A2E' }}>{card.title}</h3>
+              <p style={{ color: darkMode ? '#aaaaaa' : '#6b7280' }}>{card.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Popular Dishes Section */}
-      <div className="bg-gray-50 py-16 px-8">
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Most Loved Dishes 🔥</h2>
+      {/* Popular Dishes */}
+      <div className="py-16 px-8" style={{ background: darkMode ? '#1A1A2E' : '#f9fafb' }}>
+        <h2 className="text-4xl font-bold text-center mb-12"
+          style={{ color: darkMode ? '#ffffff' : '#1A1A2E' }}>
+          Most Loved Dishes 🔥
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {[
             { name: 'Butter Chicken', price: '₹320', emoji: '🍛', tag: 'Bestseller' },
@@ -93,11 +93,12 @@ export default function Home() {
             { name: 'Biryani',        price: '₹350', emoji: '🍚', tag: 'Chef Special' },
             { name: 'Gulab Jamun',    price: '₹120', emoji: '🍮', tag: 'Dessert' },
           ].map((dish) => (
-            <div key={dish.name} className="bg-white rounded-2xl p-6 text-center shadow hover:shadow-lg transition cursor-pointer">
+            <div key={dish.name} className="rounded-2xl p-6 text-center shadow hover:shadow-lg transition cursor-pointer"
+              style={{ background: darkMode ? '#0F0F1A' : '#ffffff', border: darkMode ? '1px solid #333' : 'none' }}>
               <div className="text-5xl mb-3">{dish.emoji}</div>
               <span className="bg-orange-100 text-orange-600 text-xs font-bold px-3 py-1 rounded-full">{dish.tag}</span>
-              <h3 className="text-lg font-bold text-gray-800 mt-3 mb-1">{dish.name}</h3>
-              <p className="text-orange-500 font-bold text-xl">{dish.price}</p>
+              <h3 className="text-lg font-bold mt-3 mb-1" style={{ color: darkMode ? '#ffffff' : '#1A1A2E' }}>{dish.name}</h3>
+              <p className="font-bold text-xl" style={{ color: '#FF6B35' }}>{dish.price}</p>
               <Link to="/menu"
                 className="mt-3 block text-white py-2 rounded-xl font-semibold transition"
                 style={{ background: '#FF6B35' }}>
@@ -121,7 +122,8 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-gray-400 text-center py-6">
+      <footer className="text-center py-6"
+        style={{ background: darkMode ? '#0F0F1A' : '#1f2937', color: '#9ca3af' }}>
         <p>© 2025 Dine AI — Made with ❤️ by Arushi Singh</p>
       </footer>
 

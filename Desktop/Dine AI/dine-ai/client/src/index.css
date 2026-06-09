@@ -14,3 +14,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode {
+  background-color: #0F0F1A !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .bg-white {
+  background-color: #1A1A2E !important;
+}
+
+.dark-mode .bg-gray-50 {
+  background-color: #0F0F1A !important;
+}
+
+.dark-mode .text-gray-800 {
+  color: #ffffff !important;
+}
+
+.dark-mode .text-gray-600 {
+  color: #aaaaaa !important;
+}
+
+.dark-mode .text-gray-500 {
+  color: #888888 !important;
+}
+
+.dark-mode .text-gray-400 {
+  color: #777777 !important;
+}
+
+.dark-mode .shadow {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+}
