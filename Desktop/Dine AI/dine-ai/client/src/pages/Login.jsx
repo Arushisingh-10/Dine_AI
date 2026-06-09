@@ -19,42 +19,58 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-orange-50 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">Welcome Back! 👋</h2>
-        <p className="text-center text-gray-500 mb-8">Login to your Dine AI account</p>
+    <div className="min-h-screen flex items-center justify-center px-4"
+      style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #8B0000 50%, #FF6B35 100%)' }}>
 
-        {error && <p className="bg-red-100 text-red-600 px-4 py-2 rounded-lg mb-4 text-center">{error}</p>}
+      <div className="w-full max-w-md">
 
-        <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-1">Email</label>
-          <input
-            type="email"
-            placeholder="you@example.com"
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-400"
-            onChange={e => setForm({ ...form, email: e.target.value })}
-          />
+        {/* Logo top */}
+        <div className="text-center mb-8">
+          <div className="text-5xl mb-3">🍽️</div>
+          <h1 className="text-3xl font-black text-white">Dine <span style={{ color: '#FFD700' }}>AI</span></h1>
+          <p className="text-white opacity-60 mt-1">Smart Dining Experience</p>
         </div>
 
-        <div className="mb-6">
-          <label className="block text-gray-700 font-semibold mb-1">Password</label>
-          <input
-            type="password"
-            placeholder="••••••••"
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-400"
-            onChange={e => setForm({ ...form, password: e.target.value })}
-          />
+        {/* Card */}
+        <div className="bg-white rounded-3xl shadow-2xl p-8">
+          <h2 className="text-2xl font-black text-gray-800 mb-1">Welcome Back! 👋</h2>
+          <p className="text-gray-400 mb-6 text-sm">Login to your Dine AI account</p>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-4 text-sm font-semibold">
+              ⚠️ {error}
+            </div>
+          )}
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2 text-sm">Email Address</label>
+            <input type="email" placeholder="you@example.com"
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-400 bg-gray-50 text-gray-800"
+              onChange={e => setForm({ ...form, email: e.target.value })}/>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2 text-sm">Password</label>
+            <input type="password" placeholder="••••••••"
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-400 bg-gray-50"
+              onChange={e => setForm({ ...form, password: e.target.value })}/>
+          </div>
+
+          <button onClick={handleSubmit}
+            className="w-full text-white font-black py-3 rounded-2xl text-lg shadow-lg transition mb-4"
+            style={{ background: 'linear-gradient(135deg, #8B0000, #FF6B35)' }}>
+            Login →
+          </button>
+
+          <p className="text-center text-gray-400 text-sm">
+            Don't have an account?{' '}
+            <Link to="/signup" className="font-bold" style={{ color: '#FF6B35' }}>Sign up free</Link>
+          </p>
         </div>
 
-        <button
-          onClick={handleSubmit}
-          className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl text-lg hover:bg-orange-600 transition">
-          Login
-        </button>
-
-        <p className="text-center text-gray-500 mt-6">
-          Don't have an account?{' '}
-          <Link to="/signup" className="text-orange-500 font-semibold hover:underline">Sign up</Link>
+        {/* Bottom text */}
+        <p className="text-center text-white opacity-40 text-xs mt-6">
+          © 2025 Dine AI — Smart Dining Experience
         </p>
       </div>
     </div>

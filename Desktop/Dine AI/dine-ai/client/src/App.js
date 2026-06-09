@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 import ImageScanner from './pages/ImageScanner';
 import Navbar from './components/Navbar';
 import Chatbot from './components/Chatbot';
+import Reviews from './pages/Reviews';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup"  element={<Signup />} />
         <Route path="/admin"   element={<Admin />} />
         <Route path="/scanner" element={<ImageScanner />} />
+        <Route path="/reviews" element={<Reviews />} />
       </Routes>
     </BrowserRouter>
   );

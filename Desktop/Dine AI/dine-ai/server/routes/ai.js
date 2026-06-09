@@ -59,4 +59,36 @@ router.post('/scan', async (req, res) => {
   }
 });
 
+
+router.post('/sentiment', async (req, res) => {
+  try {
+    const { review } = req.body;
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+    const completion = await groq.chat.completions.create({
+      model: 'llama-3.1-8b-instant',
+      messages: [
+        {
+          role: 'system',
+          content: `You are a sentiment analysis AI. Analyze the given review and respond ONLY in this exact JSON format:
+          {
+            "sentiment": "positive" or "negative" or "neutral",
+            "score": a number between 0 and 100,
+            "emoji": "😊" or "😠" or "😐",
+            "summary": "one line summary in English"
+          }
+          Nothing else. Only JSON.`
+        },
+        { role: 'user', content: review }
+      ]
+    });
+
+    const text = completion.choices[0].message.content;
+    const clean = text.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 module.exports = router;

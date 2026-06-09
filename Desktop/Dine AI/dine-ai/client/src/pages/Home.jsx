@@ -5,19 +5,54 @@ export default function Home() {
     <div className="min-h-screen bg-white">
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-20 px-8 text-center">
-        <h1 className="text-6xl font-bold mb-4">Welcome to Dine AI 🍽️</h1>
-        <p className="text-xl mb-8 opacity-90">
-          Experience the future of dining — AI-powered recommendations, smart ordering & more!
+      <div className="relative overflow-hidden text-white py-24 px-8 text-center"
+        style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #8B0000 50%, #FF6B35 100%)' }}>
+        
+        {/* Background decorative circles */}
+        <div className="absolute top-0 left-0 w-64 h-64 rounded-full opacity-10"
+          style={{ background: '#FF6B35', transform: 'translate(-30%, -30%)' }}/>
+        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10"
+          style={{ background: '#FFD700', transform: 'translate(30%, 30%)' }}/>
+        <div className="absolute top-1/2 left-10 w-32 h-32 rounded-full opacity-5"
+          style={{ background: '#fff' }}/>
+
+        {/* Badge */}
+        <div className="inline-block bg-white bg-opacity-10 border border-white border-opacity-20 px-4 py-1 rounded-full text-sm font-semibold mb-6 backdrop-blur">
+          🤖 AI Powered Restaurant Experience
+        </div>
+
+        <h1 className="text-6xl font-black mb-4 leading-tight">
+          Welcome to <span style={{ color: '#FFD700' }}>Dine AI</span>
+        </h1>
+        <p className="text-xl mb-4 opacity-80 max-w-2xl mx-auto">
+          Experience the future of dining — AI-powered recommendations,<br/> smart ordering & more!
         </p>
+
+        {/* Stats */}
+        <div className="flex justify-center gap-10 mb-10 mt-6">
+          <div>
+            <p className="text-3xl font-black" style={{ color: '#FFD700' }}>50+</p>
+            <p className="text-sm opacity-70">Menu Items</p>
+          </div>
+          <div className="border-l border-white border-opacity-20 pl-10">
+            <p className="text-3xl font-black" style={{ color: '#FFD700' }}>AI</p>
+            <p className="text-sm opacity-70">Powered</p>
+          </div>
+          <div className="border-l border-white border-opacity-20 pl-10">
+            <p className="text-3xl font-black" style={{ color: '#FFD700' }}>24/7</p>
+            <p className="text-sm opacity-70">Available</p>
+          </div>
+        </div>
+
         <div className="flex justify-center gap-4">
           <Link to="/menu"
-            className="bg-white text-orange-500 font-bold px-8 py-3 rounded-full text-lg hover:shadow-lg transition">
-            Explore Menu
+            className="font-bold px-8 py-3 rounded-full text-lg transition shadow-lg"
+            style={{ background: '#FF6B35', color: 'white' }}>
+            🍽️ Explore Menu
           </Link>
           <Link to="/signup"
-            className="border-2 border-white text-white font-bold px-8 py-3 rounded-full text-lg hover:bg-white hover:text-orange-500 transition">
-            Get Started
+            className="border-2 border-white text-white font-bold px-8 py-3 rounded-full text-lg hover:bg-white hover:text-gray-800 transition">
+            Get Started →
           </Link>
         </div>
       </div>
@@ -64,7 +99,8 @@ export default function Home() {
               <h3 className="text-lg font-bold text-gray-800 mt-3 mb-1">{dish.name}</h3>
               <p className="text-orange-500 font-bold text-xl">{dish.price}</p>
               <Link to="/menu"
-                className="mt-3 block bg-orange-500 text-white py-2 rounded-xl font-semibold hover:bg-orange-600 transition">
+                className="mt-3 block text-white py-2 rounded-xl font-semibold transition"
+                style={{ background: '#FF6B35' }}>
                 Order Now
               </Link>
             </div>
@@ -73,12 +109,14 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white py-16 px-8 text-center">
+      <div className="text-white py-16 px-8 text-center"
+        style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #8B0000 50%, #FF6B35 100%)' }}>
         <h2 className="text-4xl font-bold mb-4">Ready to experience AI dining? 🚀</h2>
         <p className="text-xl mb-8 opacity-90">Join thousands of food lovers using Dine AI!</p>
         <Link to="/signup"
-          className="bg-white text-orange-500 font-bold px-10 py-4 rounded-full text-xl hover:shadow-xl transition">
-          Start Ordering Now
+          className="font-bold px-10 py-4 rounded-full text-xl shadow-xl transition"
+          style={{ background: '#FFD700', color: '#1A1A2E' }}>
+          Start Ordering Now →
         </Link>
       </div>
 
