@@ -9,6 +9,7 @@ import ImageScanner from './pages/ImageScanner';
 import Navbar from './components/Navbar';
 import Chatbot from './components/Chatbot';
 import Reviews from './pages/Reviews';
+import CalorieEstimator from './pages/CalorieEstimator';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/admin"   element={<Admin />} />
         <Route path="/scanner" element={<ImageScanner />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/calories" element={<CalorieEstimator />} />
       </Routes>
     </BrowserRouter>
   );

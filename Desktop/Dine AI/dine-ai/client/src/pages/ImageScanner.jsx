@@ -18,20 +18,24 @@ export default function ImageScanner() {
     if (!image) return;
     setLoading(true);
     setResult('');
-    try {
-      const res = await axios.post('http://localhost:5000/api/ai/scan', {
-        imageName: image.name
-      });
-      setResult(res.data.reply);
-    } catch (err) {
-      setResult('❌ Something went wrong!');
-    }
-    setLoading(false);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64 = reader.result.split(',')[1];
+      try {
+        const res = await axios.post('http://localhost:5000/api/ai/scan', { image: base64 });
+        setResult(res.data.reply);
+      } catch (err) {
+        setResult('❌ Something went wrong!');
+      }
+      setLoading(false);
+    };
+    reader.readAsDataURL(image);
   };
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #8B0000 60%, #FF6B35 100%)' }}>
-      
+
       {/* Header */}
       <div className="text-center py-14 px-6">
         <div className="inline-block bg-white bg-opacity-10 border border-white border-opacity-20 px-4 py-1 rounded-full text-sm font-semibold text-white mb-4">
@@ -44,7 +48,7 @@ export default function ImageScanner() {
       {/* Main Card */}
       <div className="max-w-2xl mx-auto px-6 pb-16">
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          
+
           {/* Upload Area */}
           <label className="cursor-pointer block">
             <div className="relative">
@@ -58,8 +62,7 @@ export default function ImageScanner() {
               ) : (
                 <div className="h-72 flex flex-col items-center justify-center gap-4"
                   style={{ background: 'linear-gradient(135deg, #FFF3EE, #FFE8D6)' }}>
-                  <div className="w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-lg"
-                    style={{ background: 'white' }}>
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-lg bg-white">
                     📸
                   </div>
                   <div className="text-center">
@@ -96,7 +99,7 @@ export default function ImageScanner() {
               }}>
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <span className="animate-spin">⏳</span> Scanning your food...
+                  <span>⏳</span> Scanning your food...
                 </span>
               ) : '🔍 Scan Food Now'}
             </button>

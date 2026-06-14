@@ -1,8 +1,112 @@
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, total, clearCart } = useCart();
+
+  const generateBill = () => {
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFillColor(139, 0, 0);
+    doc.rect(0, 0, 210, 40, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('DINE AI', 105, 18, { align: 'center' });
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Smart Dining Experience', 105, 28, { align: 'center' });
+    doc.text('AI-Powered Restaurant', 105, 36, { align: 'center' });
+
+    // Bill Info
+    doc.setTextColor(50, 50, 50);
+    doc.setFontSize(11);
+    doc.text(`Bill Date: ${new Date().toLocaleDateString('en-IN')}`, 14, 52);
+    doc.text(`Bill Time: ${new Date().toLocaleTimeString('en-IN')}`, 14, 60);
+    doc.text(`Bill No: #${Math.floor(Math.random() * 9000) + 1000}`, 140, 52);
+    doc.text('Status: Confirmed ✓', 140, 60);
+
+    // Divider
+    doc.setDrawColor(139, 0, 0);
+    doc.setLineWidth(0.5);
+    doc.line(14, 66, 196, 66);
+
+    // Table
+    autoTable(doc, {
+      startY: 72,
+      head: [['#', 'Item', 'Category', 'Price', 'Qty', 'Total']],
+      body: cart.map((item, i) => [
+        i + 1,
+        item.name,
+        item.category || 'main',
+        `Rs. ${item.price}`,
+        item.quantity,
+        `Rs. ${item.price * item.quantity}`
+      ]),
+      headStyles: {
+        fillColor: [139, 0, 0],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 11
+      },
+      bodyStyles: { fontSize: 10, textColor: [50, 50, 50] },
+      alternateRowStyles: { fillColor: [255, 243, 238] },
+      columnStyles: {
+        0: { cellWidth: 10 },
+        1: { cellWidth: 60 },
+        2: { cellWidth: 30 },
+        3: { cellWidth: 30 },
+        4: { cellWidth: 15 },
+        5: { cellWidth: 30 },
+      }
+    });
+
+    const finalY = doc.lastAutoTable.finalY + 10;
+
+    // Summary Box
+    doc.setFillColor(255, 243, 238);
+    doc.rect(120, finalY, 76, 50, 'F');
+    doc.setDrawColor(139, 0, 0);
+    doc.rect(120, finalY, 76, 50, 'S');
+
+    doc.setFontSize(10);
+    doc.setTextColor(80, 80, 80);
+    doc.text('Subtotal:', 125, finalY + 10);
+    doc.text(`Rs. ${total}`, 188, finalY + 10, { align: 'right' });
+
+    doc.text('Tax (5%):', 125, finalY + 20);
+    doc.text(`Rs. ${Math.round(total * 0.05)}`, 188, finalY + 20, { align: 'right' });
+
+    doc.text('Delivery:', 125, finalY + 30);
+    doc.setTextColor(34, 197, 94);
+    doc.text('FREE', 188, finalY + 30, { align: 'right' });
+
+    doc.setDrawColor(139, 0, 0);
+    doc.line(125, finalY + 35, 193, finalY + 35);
+
+    doc.setFontSize(13);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(139, 0, 0);
+    doc.text('TOTAL:', 125, finalY + 45);
+    doc.text(`Rs. ${total + Math.round(total * 0.05)}`, 188, finalY + 45, { align: 'right' });
+
+    // Thank you message
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(139, 0, 0);
+    doc.text('Thank you for dining with Dine AI!', 105, finalY + 70, { align: 'center' });
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(150, 150, 150);
+    doc.text('Powered by AI • Smart Dining Experience', 105, finalY + 78, { align: 'center' });
+    doc.text('© 2025 Dine AI — Made with ❤️ by Arushi Singh', 105, finalY + 85, { align: 'center' });
+
+    doc.save(`DineAI_Bill_${Date.now()}.pdf`);
+  };
 
   if (cart.length === 0) {
     return (
@@ -96,13 +200,17 @@ export default function Cart() {
               style={{ background: 'linear-gradient(135deg, #8B0000, #FF6B35)' }}>
               🎉 Place Order
             </button>
+            <button onClick={generateBill}
+              className="w-full text-white py-3 rounded-2xl font-bold transition shadow"
+              style={{ background: 'linear-gradient(135deg, #1A1A2E, #333)' }}>
+              🧾 Download Bill (PDF)
+            </button>
             <button onClick={clearCart}
               className="w-full bg-gray-100 text-gray-500 py-3 rounded-2xl font-bold hover:bg-gray-200 transition">
               Clear Cart
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );

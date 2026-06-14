@@ -15,6 +15,7 @@ export default function Navbar() {
     { path: '/reviews', label: 'Reviews', emoji: '⭐' },
     { path: '/login',   label: 'Login',   emoji: '👤' },
     { path: '/admin',   label: 'Admin',   emoji: '⚙️' },
+    { path: '/calories', label: 'Calories', emoji: '🥗' },
   ];
 
   return (

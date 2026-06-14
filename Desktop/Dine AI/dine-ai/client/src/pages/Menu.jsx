@@ -1,15 +1,24 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
+import Skeleton from '../components/Skeleton';
 
 export default function Menu() {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('all');
+  const [loading, setLoading] = useState(true);
   const { addToCart, cart } = useCart();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/menu')
-      .then(res => setItems(res.data));
+    setLoading(true);
+    setTimeout(() => {
+      axios.get('http://localhost:5000/api/menu')
+        .then(res => {
+          setItems(res.data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }, 1500);
   }, []);
 
   const filtered = category === 'all' ? items : items.filter(i => i.category === category);
@@ -26,6 +35,7 @@ export default function Menu() {
       'Biryani': 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400',
       'Gulab Jamun': 'https://media.istockphoto.com/id/521803129/photo/gulab-jamun-11.webp?a=1&b=1&s=612x612&w=0&k=20&c=pssaaXKPDK6oegce0JpBIJVsPN00S_YwOTtCivfwdQc=',
       'Dal Makhani': 'https://media.istockphoto.com/id/531241066/photo/dal-makhani-or-dal-makhani-or-daal-makhni.webp?a=1&b=1&s=612x612&w=0&k=20&c=DgZxad4-2Q0II88BRi60BtfASi1bZYb8Xx6LBZZWmgY=',
+      'Mango Lassi': 'https://cdn.indiaphile.info/wp-content/uploads/2014/05/mangolassi-3908.jpg?width=1200&crop_gravity=center&aspect_ratio=auto&q=75'
     };
     return images[name] || 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400';
   };
@@ -60,33 +70,39 @@ export default function Menu() {
 
       {/* Menu Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-6 pb-16">
-        {filtered.map(item => (
-          <div key={item._id} className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden group">
-            <div className="relative overflow-hidden">
-              <img src={getImage(item.name)} alt={item.name}
-                className="w-full h-52 object-cover group-hover:scale-105 transition duration-300"
-                onError={e => e.target.src = 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400'}/>
-              <div className="absolute top-3 right-3">
-                <span className="text-xs font-bold px-3 py-1 rounded-full capitalize shadow"
-                  style={{ background: '#8B0000', color: 'white' }}>
-                  {item.category}
-                </span>
+
+        {/* Skeleton Loading */}
+        {loading ? (
+          Array(6).fill(0).map((_, i) => <Skeleton key={i}/>)
+        ) : (
+          filtered.map(item => (
+            <div key={item._id} className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden group">
+              <div className="relative overflow-hidden">
+                <img src={getImage(item.name)} alt={item.name}
+                  className="w-full h-52 object-cover group-hover:scale-105 transition duration-300"
+                  onError={e => e.target.src = 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400'}/>
+                <div className="absolute top-3 right-3">
+                  <span className="text-xs font-bold px-3 py-1 rounded-full capitalize shadow"
+                    style={{ background: '#8B0000', color: 'white' }}>
+                    {item.category}
+                  </span>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="text-xl font-bold text-gray-800 mb-1">{item.name}</h3>
+                <p className="text-gray-400 text-sm mb-4">{item.description}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-2xl font-black" style={{ color: '#FF6B35' }}>₹{item.price}</span>
+                  <button onClick={() => handleAddToCart(item)}
+                    className="text-white px-5 py-2 rounded-xl font-bold transition shadow"
+                    style={{ background: 'linear-gradient(135deg, #8B0000, #FF6B35)' }}>
+                    + Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="p-5">
-              <h3 className="text-xl font-bold text-gray-800 mb-1">{item.name}</h3>
-              <p className="text-gray-400 text-sm mb-4">{item.description}</p>
-              <div className="flex justify-between items-center">
-                <span className="text-2xl font-black" style={{ color: '#FF6B35' }}>₹{item.price}</span>
-                <button onClick={() => handleAddToCart(item)}
-                  className="text-white px-5 py-2 rounded-xl font-bold transition shadow"
-                  style={{ background: 'linear-gradient(135deg, #8B0000, #FF6B35)' }}>
-                  + Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       {/* Cart Badge */}
