@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import Skeleton from '../components/Skeleton';
+import toast from 'react-hot-toast';
 
 export default function Menu() {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('all');
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const { addToCart, cart } = useCart();
 
@@ -21,11 +23,16 @@ export default function Menu() {
     }, 1500);
   }, []);
 
-  const filtered = category === 'all' ? items : items.filter(i => i.category === category);
+  const filtered = items
+    .filter(i => category === 'all' || i.category === category)
+    .filter(i =>
+      i.name.toLowerCase().includes(search.toLowerCase()) ||
+      i.description.toLowerCase().includes(search.toLowerCase())
+    );
 
   const handleAddToCart = (item) => {
     addToCart(item);
-    alert(`✅ ${item.name} added to cart!`);
+    toast.success(`${item.name} added to cart! 🛒`);
   };
 
   const getImage = (name) => {
@@ -39,7 +46,6 @@ export default function Menu() {
     };
     return images[name] || 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400';
   };
-
   return (
     <div className="min-h-screen bg-gray-50">
 
@@ -50,7 +56,26 @@ export default function Menu() {
           🍽️ Fresh & Delicious
         </div>
         <h1 className="text-5xl font-black mb-2">Our <span style={{ color: '#FFD700' }}>Menu</span></h1>
-        <p className="opacity-70 text-lg">AI-recommended dishes just for you!</p>
+        <p className="opacity-70 text-lg mb-8">AI-recommended dishes just for you!</p>
+
+        {/* Search Bar */}
+        <div className="max-w-lg mx-auto relative">
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">🔍</span>
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search dishes, ingredients..."
+            className="w-full pl-12 pr-4 py-4 rounded-2xl text-gray-800 font-semibold focus:outline-none shadow-lg"
+            style={{ background: 'rgba(255,255,255,0.95)' }}
+          />
+          {search && (
+            <button onClick={() => setSearch('')}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 font-bold text-lg">
+              ✕
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Category Filter */}
@@ -68,12 +93,33 @@ export default function Menu() {
         ))}
       </div>
 
+      {/* Search Results Info */}
+      {search && !loading && (
+        <div className="text-center mb-4">
+          <p className="text-gray-500 font-semibold">
+            {filtered.length > 0
+              ? `🔍 ${filtered.length} result${filtered.length > 1 ? 's' : ''} found for "${search}"`
+              : `😔 No results found for "${search}"`}
+          </p>
+        </div>
+      )}
+
       {/* Menu Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-6 pb-16">
 
-        {/* Skeleton Loading */}
         {loading ? (
           Array(6).fill(0).map((_, i) => <Skeleton key={i}/>)
+        ) : filtered.length === 0 ? (
+          <div className="col-span-3 text-center py-20">
+            <div className="text-8xl mb-4">🍽️</div>
+            <h3 className="text-2xl font-black text-gray-600 mb-2">No dishes found!</h3>
+            <p className="text-gray-400">Try a different search term</p>
+            <button onClick={() => setSearch('')}
+              className="mt-4 text-white px-6 py-2 rounded-full font-bold"
+              style={{ background: '#8B0000' }}>
+              Clear Search
+            </button>
+          </div>
         ) : (
           filtered.map(item => (
             <div key={item._id} className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden group">
