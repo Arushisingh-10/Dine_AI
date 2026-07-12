@@ -11,6 +11,7 @@ import CalorieEstimator from './pages/CalorieEstimator';
 import OrderHistory from './pages/OrderHistory';
 import Navbar from './components/Navbar';
 import Chatbot from './components/Chatbot';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -23,11 +24,19 @@ function App() {
         <Route path="/cart"    element={<Cart />} />
         <Route path="/login"   element={<Login />} />
         <Route path="/signup"  element={<Signup />} />
-        <Route path="/admin"   element={<Admin />} />
         <Route path="/scanner" element={<ImageScanner />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/calories" element={<CalorieEstimator />} />
-        <Route path="/orders"  element={<OrderHistory />} />
+        <Route path="/orders"  element={
+          <ProtectedRoute>
+            <OrderHistory />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin"   element={
+          <ProtectedRoute adminOnly={true}>
+            <Admin />
+          </ProtectedRoute>
+        } />
       </Routes>
     </BrowserRouter>
   );
