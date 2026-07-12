@@ -6,10 +6,11 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Admin from './pages/Admin';
 import ImageScanner from './pages/ImageScanner';
-import Navbar from './components/Navbar';
-import Chatbot from './components/Chatbot';
 import Reviews from './pages/Reviews';
 import CalorieEstimator from './pages/CalorieEstimator';
+import OrderHistory from './pages/OrderHistory';
+import Navbar from './components/Navbar';
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/scanner" element={<ImageScanner />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/calories" element={<CalorieEstimator />} />
+        <Route path="/orders"  element={<OrderHistory />} />
       </Routes>
     </BrowserRouter>
   );

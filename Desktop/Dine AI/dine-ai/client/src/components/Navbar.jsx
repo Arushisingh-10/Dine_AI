@@ -9,13 +9,14 @@ export default function Navbar() {
   const isActive = (path) => location.pathname === path;
 
   const navLinks = [
-    { path: '/menu',    label: 'Menu',    emoji: '🍽️' },
-    { path: '/cart',    label: 'Cart',    emoji: '🛒' },
-    { path: '/scanner', label: 'Scanner', emoji: '📸' },
-    { path: '/reviews', label: 'Reviews', emoji: '⭐' },
-    { path: '/login',   label: 'Login',   emoji: '👤' },
-    { path: '/admin',   label: 'Admin',   emoji: '⚙️' },
+    { path: '/menu',     label: 'Menu',     emoji: '🍽️' },
+    { path: '/cart',     label: 'Cart',     emoji: '🛒' },
+    { path: '/scanner',  label: 'Scanner',  emoji: '📸' },
+    { path: '/reviews',  label: 'Reviews',  emoji: '⭐' },
     { path: '/calories', label: 'Calories', emoji: '🥗' },
+    { path: '/orders',   label: 'Orders',   emoji: '📋' },
+    { path: '/login',    label: 'Login',    emoji: '👤' },
+    { path: '/admin',    label: 'Admin',    emoji: '⚙️' },
   ];
 
   return (
@@ -78,6 +79,27 @@ export default function Navbar() {
         </Link>
       ))}
 
+      {/* Logout Button */}
+{localStorage.getItem('user') && (
+  <button
+    onClick={() => {
+      localStorage.clear();
+      window.location.href = '/login';
+    }}
+    style={{
+      background: 'rgba(255,0,0,0.2)',
+      border: '1px solid rgba(255,255,255,0.2)',
+      borderRadius: '30px',
+      padding: '8px 16px',
+      cursor: 'pointer',
+      color: 'white',
+      fontWeight: '700',
+      fontSize: '13px',
+    }}>
+    🚪 Logout
+  </button>
+)}
+
       {/* Dark Mode Toggle */}
       <button onClick={toggleDark}
         style={{
@@ -87,7 +109,6 @@ export default function Navbar() {
           borderRadius: '30px',
           padding: '8px 16px',
           cursor: 'pointer',
-          fontSize: '18px',
           transition: 'all 0.3s ease',
           display: 'flex',
           alignItems: 'center',
@@ -97,6 +118,8 @@ export default function Navbar() {
           fontSize: '13px',
         }}>
         {darkMode ? '☀️ Light' : '🌙 Dark'}
+
+        
       </button>
     </nav>
   );

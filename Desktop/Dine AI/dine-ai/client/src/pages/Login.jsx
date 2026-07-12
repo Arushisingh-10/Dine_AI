@@ -12,6 +12,7 @@ export default function Login() {
       const res = await axios.post('http://localhost:5000/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
+      localStorage.setItem('userId', res.data.user._id);
       window.location.href = '/';
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
