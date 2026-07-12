@@ -35,17 +35,19 @@ export default function Menu() {
     toast.success(`${item.name} added to cart! 🛒`);
   };
 
-  const getImage = (name) => {
-    const images = {
-      'Butter Chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400',
-      'Paneer Tikka': 'https://spicecravings.com/wp-content/uploads/2020/10/Paneer-Tikka-Featured-1-480x270.jpg',
-      'Biryani': 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400',
-      'Gulab Jamun': 'https://media.istockphoto.com/id/521803129/photo/gulab-jamun-11.webp?a=1&b=1&s=612x612&w=0&k=20&c=pssaaXKPDK6oegce0JpBIJVsPN00S_YwOTtCivfwdQc=',
-      'Dal Makhani': 'https://media.istockphoto.com/id/531241066/photo/dal-makhani-or-dal-makhani-or-daal-makhni.webp?a=1&b=1&s=612x612&w=0&k=20&c=DgZxad4-2Q0II88BRi60BtfASi1bZYb8Xx6LBZZWmgY=',
-      'Mango Lassi': 'https://cdn.indiaphile.info/wp-content/uploads/2014/05/mangolassi-3908.jpg?width=1200&crop_gravity=center&aspect_ratio=auto&q=75'
-    };
-    return images[name] || 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400';
+const getImage = (name) => {
+  const images = {
+    'Butter Chicken': 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400',
+    'Paneer Tikka': 'https://spicecravings.com/wp-content/uploads/2020/10/Paneer-Tikka-Featured-1-480x270.jpg',
+    'Biryani': 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400',
+    'Gulab Jamun': 'https://media.istockphoto.com/id/521803129/photo/gulab-jamun-11.webp?a=1&b=1&s=612x612&w=0&k=20&c=pssaaXKPDK6oegce0JpBIJVsPN00S_YwOTtCivfwdQc=',
+    'Dal Makhani': 'https://media.istockphoto.com/id/531241066/photo/dal-makhani-or-dal-makhani-or-daal-makhni.webp?a=1&b=1&s=612x612&w=0&k=20&c=DgZxad4-2Q0II88BRi60BtfASi1bZYb8Xx6LBZZWmgY=',
+    'Mango Lassi': 'https://beextravegant.com/wp-content/uploads/2023/06/DSC03864.jpg?w=500',
+    'Chocolate Brownie': 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400',
+    'Kitkat Shake': 'https://images.unsplash.com/photo-1696487773677-c0c8061fe3d2?q=80&w=999&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   };
+  return images[name] || 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400';
+};
   return (
     <div className="min-h-screen bg-gray-50">
 
