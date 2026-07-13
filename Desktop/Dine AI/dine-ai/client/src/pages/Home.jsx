@@ -124,7 +124,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="text-center py-6"
         style={{ background: darkMode ? '#0F0F1A' : '#1f2937', color: '#9ca3af' }}>
-        <p>© 2025 Dine AI — Made with ❤️ by Arushi Singh</p>
+        <p>© 2026 Dine AI — Made with ❤️ by Arushi Singh</p>
       </footer>
 
     </div>
